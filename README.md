@@ -1,58 +1,155 @@
-# llm-xai-nuclear-paper
+# Mechanistic Interpretability of Domain-Adapted Large Language Models for Nuclear Engineering Applications
 
-# Mechanistic Interpretability of a Domain-Adapted Large Language Model for Nuclear Engineering Applications
+This repository contains the code and methodology for the paper "Mechanistic Interpretability of a Domain-Adapted Large Language Model for Nuclear Engineering Applications" submitted to Nuclear Technology.
 
-This repository contains the source code, data, and analysis scripts for the paper: "Mechanistic Interpretability of a Domain-Adapted Large Language Model for Nuclear Engineering Applications".
+## Overview
 
-## Abstract
+This project demonstrates a novel methodology for interpreting how Large Language Models (LLMs) encode and utilize domain-specific knowledge in safety-critical nuclear engineering applications. We adapt a general-purpose LLM (Gemma-3-1b-it) to the nuclear domain using LoRA fine-tuning and employ neuron silencing techniques to identify specialized neural circuits responsible for domain expertise.
 
-The integration of Large Language Models (LLMs) into safety-critical domains such as nuclear engineering necessitates a deep understanding of their internal reasoning processes. This paper presents a novel methodology for interpreting how an LLM encodes and utilizes domain-specific knowledge, using a Boiling Water Reactor (BWR) system as a case study. We adapted a general-purpose LLM (Gemma-3-1b-it) to the nuclear domain using a parameter-efficient fine-tuning technique known as Low-Rank Adaptation (LoRA). By comparing the neuron activation patterns of the base model with the fine-tuned model, we identified a sparse set of neurons whose behavior was significantly altered during the adaptation process. To probe the causal role of these "specialized" neurons, we employed a neuron silencing technique. Our results demonstrate that deactivating a small, targeted group of these neurons led to a statistically significant degradation in task performance. This work provides a concrete methodology for tracing the mechanistic underpinnings of domain expertise within an LLM, offering a critical step toward building more transparent, reliable, and verifiable AI systems for nuclear science and engineering.
+## Key Contributions
+
+- **Glass Box AI**: Transform opaque "black box" models into transparent "glass box" systems for nuclear safety applications
+- **Mechanistic Analysis**: Identify specific neurons whose activation patterns change during domain adaptation
+- **Causal Intervention**: Use neuron silencing to test the functional importance of specialized neurons
+- **Nuclear-Grade Assurance**: Provide a pathway toward AI verification and validation for nuclear regulatory compliance
 
 ## Repository Structure
 
 ```
-├── main.tex                           # Main LaTeX source file for the paper
-├── references.bib                     # BibTeX file for managing all references
-├── data/
-│   └── bwr_eval_stratified.json      # Question-Answering dataset in JSON format
-├── figures/                          # All figures and plots used in the paper
-└── scripts/                          # Python scripts used in this study
-    ├── extract_qa_gpt4o.py           # Script to generate QA dataset from source documents
-    ├── LoRA_fine_tune.py             # Script for fine-tuning the base model with QLoRA
-    └── last_analysis.py              # Script for neuron activation analysis and silencing experiments
+├── README.md
+├── requirements.txt
+├── extract_qa_gpt4o.py      # QA dataset generation using GPT-4o
+├── LoRA_fine_tune.py        # LoRA fine-tuning implementation
+└── last_analysis.py         # Neuron analysis and silencing experiments
 ```
 
-## How to Reproduce
+## Installation
 
-### 1. Dependencies
+### Prerequisites
 
-It is recommended to use a Python virtual environment. Install the required libraries using pip:
+- Python 3.8+
+- CUDA-capable GPU (recommended: 16GB+ VRAM)
+- PyTorch 2.0+
+
+### Setup
 
 ```bash
-pip install torch transformers peft accelerate bitsandbytes scipy matplotlib numpy openai pypdf
+git clone https://github.com/[username]/nuclear-llm-interpretability
+cd nuclear-llm-interpretability
+pip install -r requirements.txt
 ```
 
-### 2. Running the Experiments
+### Required Dependencies
 
-The scripts should be run in the following order:
+```bash
+pip install torch transformers peft datasets evaluate
+pip install numpy pandas matplotlib scipy tqdm
+pip install openai  # For QA generation (optional)
+```
 
-1. **Generate Dataset:** Run `scripts/extract_qa_gpt4o.py` to create the `bwr_eval_stratified.json` file. 
-   > **Note:** This requires access to the original source PDFs and a valid OpenAI API key.
+## Usage
 
-2. **Fine-tune Model:** Run `scripts/LoRA_fine_tune.py` to train the LoRA model using the generated dataset.
+### 1. Data Generation (Optional)
 
-3. **Analyze Results:** Run `scripts/last_analysis.py` to perform the neuron analysis, generate all figures for the paper, and save the quantitative results.
+Generate domain-specific QA pairs using GPT-4o:
+
+```bash
+# Set your OpenAI API key
+export OPENAI_API_KEY="your-api-key"
+
+# Generate QA dataset
+python extract_qa_gpt4o.py
+```
+
+**Note**: You need to provide your own nuclear engineering documents as source material.
+
+### 2. LoRA Fine-tuning
+
+Train the domain-adapted model:
+
+```bash
+python LoRA_fine_tune.py
+```
+
+### 3. Mechanistic Analysis
+
+Perform neuron activation analysis and silencing experiments:
+
+```bash
+python last_analysis.py
+```
+
+## Configuration
+
+Update the following paths in each script according to your setup:
+
+```python
+# In each .py file, modify these variables:
+BASE_MODEL_PATH = "path/to/gemma-3-1b-it"
+LORA_MODEL_PATH = "path/to/output/lora/model"
+DATA_PATH = "path/to/qa/dataset"
+OUTPUT_DIR = "path/to/analysis/results"
+```
+
+### LoRA Configuration
+Key parameters in `LoRA_fine_tune.py`:
+
+```python
+lora_config = LoraConfig(
+    r=8,                    # Rank
+    lora_alpha=16,          # Alpha
+    target_modules=[...],   # Target attention/MLP layers
+    lora_dropout=0.05,      # Dropout rate
+)
+```
+
+### Analysis Parameters
+Configure neuron analysis in `last_analysis.py`:
+
+```python
+NUM_TOP_ACTIVATED_TO_SILENCE = 5    # Amplified neurons to analyze
+NUM_TOP_SUPPRESSED_TO_SILENCE = 1   # Suppressed neurons to analyze
+```
+
+## Results
+
+The analysis generates:
+
+- **Neuron activation visualizations**: Changes in activation patterns
+- **Performance metrics**: BLEU/ROUGE scores before and after silencing
+- **Statistical significance tests**: Wilcoxon signed-rank tests
+- **Quality degradation examples**: Concrete examples of performance loss
+
+## Data
+
+Due to the sensitive nature of nuclear domain data, the specific QA dataset used in the paper is not included in this repository. However, the complete data generation methodology is provided in `extract_qa_gpt4o.py`.
+
+Users can create their own domain-specific datasets by:
+
+1. Collecting authoritative technical documents (IAEA, NRC, etc.)
+2. Using the provided GPT-4o extraction script
+3. Following the stratified sampling approach described in the paper
+
+## Nuclear Safety Considerations
+
+This methodology is designed with nuclear safety principles in mind:
+
+- **Plant-specific deployment**: Each facility maintains isolated AI systems
+- **Verification & Validation**: Traceable neural circuits for regulatory compliance
+- **Defense-in-Depth**: Multiple layers of interpretability analysis
+- **ALARA principle**: Minimizing AI-related risks through transparency
 
 ## Citation
 
-If you find this work useful in your research, please consider citing our paper:
+If you use this code or methodology in your research, please cite:
 
 ```bibtex
-@article{lee2025mechanistic,
+@article{lee2024mechanistic,
   title={Mechanistic Interpretability of a Domain-Adapted Large Language Model for Nuclear Engineering Applications},
   author={Lee, Yoon Pyo},
-  journal={Nuclear Science and Engineering (Submitted)},
-  year={2025}
+  journal={Nuclear Technology},
+  year={2024},
+  note={Submitted}
 }
 ```
 
@@ -60,12 +157,19 @@ If you find this work useful in your research, please consider citing our paper:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contact
-
-For questions or issues related to this work, please contact:
-- **Author:** Yoon Pyo Lee
-- **Email:** [lukeyounpyo@hanyang.ac.kr]
-
 ## Acknowledgments
 
-We acknowledge the contributions of the nuclear engineering community and the open-source machine learning community for making this research possible.
+- Gemma team at Google for the base model
+- Hugging Face for the transformers and PEFT libraries
+
+## Contact
+
+For questions about the methodology or implementation:
+
+- **Author**: Yoon Pyo Lee
+- **Email**: lukeyounpyo@hanyang.ac.kr
+- **Institution**: Department of Nuclear Engineering, Hanyang University
+
+## Disclaimer
+
+This research is for academic purposes only. Any deployment in actual nuclear facilities must undergo proper regulatory review and approval processes in accordance with relevant nuclear safety standards (10 CFR 50 Appendix B, IEEE Std 7-4.3.2, etc.).
