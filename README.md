@@ -72,7 +72,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For questions or issues related to this work, please contact:
 - **Author:** Yoon Pyo Lee
-- **Email:** [your-email@domain.com]
+- **Email:** [lukeyounpyo@hanyang.ac.kr]
 
 ## Acknowledgments
 
