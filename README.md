@@ -43,14 +43,6 @@ The scripts should be run in the following order:
 
 3. **Analyze Results:** Run `scripts/last_analysis.py` to perform the neuron analysis, generate all figures for the paper, and save the quantitative results.
 
-### 3. Compiling the Paper
-
-To compile the LaTeX paper (`main.tex`) and generate a PDF with all references correctly linked, use `latexmk`:
-
-```bash
-latexmk -pdf main.tex
-```
-
 ## Citation
 
 If you find this work useful in your research, please consider citing our paper:
