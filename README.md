@@ -144,3 +144,7 @@ Email: lukeyounpyo@hanyang.ac.kr
 ## License
 
 This project is licensed under the MIT License - see LICENSE file for details.
+
+## Acknowledgments
+
+This research was conducted at Hanyang University. I am grateful for the foundational open-source tools provided by the PyTorch and Hugging Face communities, which were essential for this work.
