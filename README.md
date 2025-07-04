@@ -144,7 +144,3 @@ Email: lukeyounpyo@hanyang.ac.kr
 ## License
 
 This project is licensed under the MIT License - see LICENSE file for details.
-
-## Acknowledgments
-
-This work was conducted as an undergraduate research project at Hanyang University. Special thanks to the nuclear engineering community for their commitment to safety and innovation.
