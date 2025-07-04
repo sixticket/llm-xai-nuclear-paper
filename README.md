@@ -7,7 +7,7 @@ This repository contains the implementation code for the paper "Mechanistic Inte
 This work addresses the critical challenge of deploying Large Language Models (LLMs) in safety-critical nuclear engineering applications by developing a methodology to interpret and verify the internal mechanisms of domain-adapted models.
 
 ### Key Contributions
-- 🔬 First application of mechanistic interpretability to nuclear safety domain
+- 🔬 A novel application of mechanistic interpretability to nuclear safety domain
 - 🧠 Identification of specialized neurons encoding BWR technical knowledge
 - 📊 Causal verification through neuron silencing experiments
 - 🏭 Pathway toward regulatory-compliant AI in nuclear operations
