@@ -116,6 +116,17 @@ Due to the sensitive nature of nuclear safety documentation, the raw training te
 - Source documents are publicly available from IAEA, OECD/NEA, and NRC
 - Generated datasets can be shared upon request
 
+The Question-Answering dataset used in this study was generated from the following authoritative public documents. Reviewers and researchers can access the original source materials via the links below:
+
+1.  **OECD/NEA - BWR Severe Accident Mitigation Guidelines (SAMG)**
+    * [https://www.oecd-nea.org/upload/docs/application/pdf/2025-04/nea_cnra_2022_2.pdf](https://www.oecd-nea.org/upload/docs/application/pdf/2025-04/nea_cnra_2022_2.pdf)
+
+2.  **IAEA - Boiling Water Reactor Simulator**
+    * [https://www-pub.iaea.org/MTCD/Publications/PDF/TCS-23_2nd_web.pdf](https://www-pub.iaea.org/MTCD/Publications/PDF/TCS-23_2nd_web.pdf)
+
+3.  **U.S. NRC - Boiling Water Reactor (BWR) Systems**
+    * [https://www.nrc.gov/reading-rm/basic-ref/students/for-educators/03.pdf](https://www.nrc.gov/reading-rm/basic-ref/students/for-educators/03.pdf)
+
 ## Citation
 
 If you use this code in your research, please cite:
